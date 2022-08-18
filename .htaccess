@@ -1,0 +1,16 @@
+# Get URL name 
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$
+RewriteRule ^$ ASSETS/%1/index.php [L]
+
+
+# Redirect non-existing pages to index.php
+Options +SymLinksIfOwnerMatch 
+RewriteEngine On 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+#another get url name and save it
+<If "%{HTTP_COOKIE} !^.*LandingPageURL.*$">
+    Header edit Set-Cookie ^(.*)$  $1;SameSite=None;Secure;HttpOnly
+</If> 
